@@ -19,15 +19,19 @@ public class Main {
             switch (selection) {
                 case 1:
                     // New Game
+                    System.out.println("You chose: New Game");
                     break;
                 case 2:
                     // Load Game
+                    System.out.println("You chose: Load Game");
                     break;
                 case 3:
                     // Configuration
+                    System.out.println("You chose: Configuration");
                     break;
                 case 4:
                     // Exit
+                    System.out.println("You chose: Exit");
                     break;
                 default:
                     // Cualquier otro numero
