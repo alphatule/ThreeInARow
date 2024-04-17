@@ -36,19 +36,19 @@ public class TUI {
                 case 1:
                     // New Game
                     this.newGame();
-                    break;
+                    return 1;
                 case 2:
                     // Load Game
                     this.loadGame();
-                    break;
+                    return 2;
                 case 3:
                     // Configuration
                     this.configuration();
-                    break;
+                    return 3;
                 case 4:
                     // Exit
                     this.exit();
-                    break;
+                    return 4;
                 default:
                     // Cualquier otro numero
                     // seguira dando vueltas en el bucle
