@@ -19,19 +19,16 @@ public class TUI {
     }
     public short menu(){
         Scanner sc = new Scanner(System.in);
-        while (true) {
-            int selection = 0;
-            System.out.println("Welcome to Three In a row\n" +
-                    "1. New Game\n" +
-                    "2. Load Game\n" +
-                    "3. Configuration\n" +
-                    "4. Exit\n\n" +
-                    "Select a option:");
-            try {
-                selection = Integer.valueOf(sc.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid integer input");
-            }
+        int selection = 0;
+        // Mostramos menu
+        System.out.println("Welcome to Three In a row\n" +
+                "1. New Game\n" +
+                "2. Load Game\n" +
+                "3. Configuration\n" +
+                "4. Exit\n\n" +
+                "Select a option:");
+        try {
+            selection = Integer.parseInt(sc.nextLine());
             switch (selection) {
                 case 1:
                     // New Game
@@ -52,7 +49,11 @@ public class TUI {
                 default:
                     // Cualquier otro numero
                     // seguira dando vueltas en el bucle
+                    return this.menu();
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid integer input");
+            return this.menu();
         }
     }
 }
