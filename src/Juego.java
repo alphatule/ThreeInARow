@@ -5,7 +5,7 @@ public class Juego {
     // Turno = True => Es turno del jugador
     boolean turno;
     // El tablero deberia ser siempre un 3x3 pero podria variar para ampliar funcionalidad al juego.
-    char[][] tablero;
+    short[][] tablero;
 
     // Creamos un nuevo tablero en blanco
     public void nuevaPartida()
