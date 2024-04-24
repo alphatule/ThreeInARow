@@ -3,9 +3,17 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Juego {
     // Turno = False => Es turno de la maquina
     // Turno = True => Es turno del jugador
-    boolean turno;
+    private boolean turno;
     // El tablero deberia ser siempre un 3x3 pero podria variar para ampliar funcionalidad al juego.
-    short[][] tablero;
+    private short[][] tablero;
+
+    public boolean isTurno() {
+        return turno;
+    }
+
+    public short[][] getTablero() {
+        return tablero;
+    }
 
     // Creamos un nuevo tablero en blanco
     public void nuevaPartida()
