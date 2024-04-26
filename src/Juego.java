@@ -1,8 +1,8 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Juego {
-    // Turno = False => Es turno de la maquina
     // Turno = True => Es turno del jugador
+    // Turno = False => Es turno de la maquina
     private boolean turno;
     // El tablero deberia ser siempre un 3x3 pero podria variar para ampliar funcionalidad al juego.
     private short[][] tablero;
