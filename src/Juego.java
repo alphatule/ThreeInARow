@@ -18,14 +18,30 @@ public class Juego {
     // Creamos un nuevo tablero en blanco
     public void nuevaPartida()
     {
-        throw new NotImplementedException();
+        short[][] tInit = {
+                {0,0,0},
+                {0,0,0},
+                {0,0,0}
+        };
+        tablero = tInit;
+        turno = true;
+
     }
 
     // Indicamos la fila y columna donde el jugador (que tiene el turno) quiere colocar la ficha
     // por lo tanto deberiamos actualizar el tablero y el turno
-    public void jugar(short fila, short columna)
+    public boolean jugar(short fila, short columna)
     {
-        throw new NotImplementedException();
+        if (tablero[fila][columna] != 0)
+        {
+            // Ya hay una ficha colocada
+            return false;
+        } else
+        {
+            // No hay ficha y la colocamos
+            tablero[fila][columna] = (short) (turno ? 1 : 2);
+            return true;
+        }
     }
 
     // Recogemos una fila y columna comrpobamos si es una jugada ganadora;
