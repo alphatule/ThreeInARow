@@ -31,11 +31,11 @@ public class TUI {
                     System.out.print(0);
                 } else if (tablero[fila][columna] == 1)
                 {
-                    // Posicion de jugador 1
+                    // Posicion de jugador 1 (jugador fisico)
                     System.out.print("X");
                 } else if (tablero[fila][columna] == 2)
                 {
-                    // posicion de jugador 2
+                    // posicion de jugador 2 (jugador maquina)
                     System.out.print("B");
                 }
             }
@@ -47,7 +47,25 @@ public class TUI {
     // aparte de pedirle al jugador la jugada actual.
     public short[] recogerJugada()
     {
-        throw new NotImplementedException();
+        short fila = -1;
+        short columna = -1;
+        while (true)
+        {
+            try
+            {
+                while (fila < 1 || fila > 3)
+                {
+                    System.out.println("Fila (horizontal) de 1 a 3: ");
+                    fila = (short) Integer.parseInt(sc.nextLine());
+                }
+                while (columna < 1 || columna > 3)
+                {
+                    System.out.println("Columna (vertical) de 1 a 3: ");
+                    columna = (short) Integer.parseInt(sc.nextLine());
+                }
+                return (short[]) new short[]{(short) (fila-1), (short) (columna-1)};
+            } catch (NumberFormatException e){}
+        }
     }
 
     // Indica el ganador de la partida o empate
