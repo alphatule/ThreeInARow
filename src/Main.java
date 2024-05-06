@@ -5,15 +5,16 @@ import java.util.Scanner;
 
 public class Main {
     static boolean enMenu = true;
+    static Juego juego = new Juego();
     public static void main(String[] args) {
         TUI tui = new TUI();
-        Juego juego = new Juego();
 
         while (enMenu)
         {
             try
             {
-                switch (tui.mostrarMenu()) {
+                switch (tui.mostrarMenu())
+                {
                     case 1:
                         // New Game
                         nuevaPartida();
@@ -40,7 +41,7 @@ public class Main {
 
     private static void nuevaPartida()
     {
-        throw new NotImplementedException();
+        juego.nuevaPartida();
     }
 
     private static void cargarPartida()
