@@ -46,7 +46,7 @@ public class Juego {
 
     // Recogemos una fila y columna comrpobamos si es una jugada ganadora;
     // Devolvemos un booleano para saber si esta jugada es ganadora;
-    // Hay que tener en cuenta que el tablero y el turno no se alteral
+    // Hay que tener en cuenta que el tablero y el turno no se alteran
     public boolean jugadaGanadora(short fila, short columna)
     {
         throw new NotImplementedException();

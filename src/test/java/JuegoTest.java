@@ -55,4 +55,22 @@ class JuegoTest {
         Assertions.assertArrayEquals(j.getTablero(), tInit);
         Assertions.assertEquals(j.isTurno(), true);
     }
+
+    @ParameterizedTest
+    @CsvSource({"0,0", "0,1", "0,2", "2,0"})
+    void juegadaGanadora(short fila, short columna)
+    {
+        Juego j = new Juego();
+        Assertions.assertEquals(j.jugadaGanadora(fila, columna), false);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0,0", "0,1", "0,2", "2,0"})
+    void juegadaGanadora_2(short fila, short columna)
+    {
+        Juego j = new Juego();
+        Assertions.assertEquals(j.jugadaGanadora(fila, columna), false);
+    }
+
+
 }
