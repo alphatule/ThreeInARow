@@ -2,6 +2,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.lang.reflect.Array;
+
 class JuegoTest {
     @ParameterizedTest
     @CsvSource({"0,0", "0,1", "0,2", "2,0"})
@@ -21,6 +23,7 @@ class JuegoTest {
                 Assertions.assertEquals(tInit[i][k], j.getTablero()[i][k]);
             }
         }
+        Assertions.assertArrayEquals(tInit, j.getTablero());
     }
 
     @ParameterizedTest
@@ -38,9 +41,8 @@ class JuegoTest {
                 Assertions.assertEquals(tInit[i][k], j.getTablero()[i][k]);
             }
         }
+        Assertions.assertArrayEquals(tInit, j.getTablero());
     }
-
-
 
     @org.junit.jupiter.api.Test
     void nuevaPartida()
@@ -52,8 +54,8 @@ class JuegoTest {
                 {0,0,0},
                 {0,0,0}
         };
-        Assertions.assertArrayEquals(j.getTablero(), tInit);
-        Assertions.assertEquals(j.isTurno(), true);
+        Assertions.assertArrayEquals(tInit, j.getTablero());
+        Assertions.assertEquals(true, j.isTurno());
     }
 
     @ParameterizedTest
@@ -61,16 +63,54 @@ class JuegoTest {
     void juegadaGanadora(short fila, short columna)
     {
         Juego j = new Juego();
-        Assertions.assertEquals(j.jugadaGanadora(fila, columna), false);
+        j.nuevaPartida();
+        Assertions.assertEquals(false, j.jugadaGanadora(fila, columna));
     }
 
     @ParameterizedTest
-    @CsvSource({"0,0", "0,1", "0,2", "2,0"})
-    void juegadaGanadora_2(short fila, short columna)
+//    @CsvSource({"0,0,0,1", "0,2,2,0"})
+    @CsvSource({"0,0,0,1"})
+//    @CsvSource({"0,2,2,0"})
+    void juegadaGanadora_2(short fila, short columna, short fila2, short columna2)
     {
         Juego j = new Juego();
-        Assertions.assertEquals(j.jugadaGanadora(fila, columna), false);
+        j.nuevaPartida();
+        j.jugar(fila, columna);
+        Assertions.assertEquals(false, j.jugadaGanadora(fila2, columna2));
+        String a = "test";
     }
 
 
+    @org.junit.jupiter.api.Test
+    void juegadaGanadora_3__jugador1()
+    {
+        Juego j = new Juego();
+        j.nuevaPartida();
+        j.jugar((short) 0,(short) 0); // Jugador 1
+        j.jugar((short) 1,(short) 0); // Jugador 2
+        j.jugar((short) 0,(short) 1); // Jugador 1
+        j.jugar((short) 1,(short) 1); // Jugador 2
+
+        // Ultima jugada de jugador 1
+        Assertions.assertEquals(true, j.jugadaGanadora((short) 0,(short) 2));
+        // miramos que sea jugador 1 (true)
+        Assertions.assertEquals(true, j.isTurno());
+    }
+
+    @org.junit.jupiter.api.Test
+    void juegadaGanadora_3_jugador2()
+    {
+        Juego j = new Juego();
+        j.nuevaPartida();
+        j.jugar((short) 0,(short) 0); // Jugador 1
+        j.jugar((short) 1,(short) 0); // Jugador 2
+        j.jugar((short) 0,(short) 1); // Jugador 1
+        j.jugar((short) 1,(short) 1); // Jugador 2
+        j.jugar((short) 2,(short) 0); // Jugador 1
+        
+        // Ultima jugada de jugador 2
+        Assertions.assertEquals(true, j.jugadaGanadora((short) 1,(short) 2));
+        // miramos que sea jugador 2 (false)
+        Assertions.assertEquals(false, j.isTurno());
+    }
 }
