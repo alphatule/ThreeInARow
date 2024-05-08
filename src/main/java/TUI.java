@@ -8,13 +8,60 @@ public class TUI {
     // Mostramos menu y devolvemos la opcion seleccionada
     public short mostrarMenu()
     {
-        System.out.println("Welcome to Three In a row\n" +
+        System.out.println("Welcome to Tic Tac Toe\n" +
                 "1. New Game\n" +
                 "2. Load Game\n" +
                 "3. Configuration\n" +
                 "4. Exit\n\n" +
                 "Select a option:");
         return (short) Integer.parseInt(sc.nextLine());
+    }
+
+    public short mostrarMenuConfig()
+    {
+        System.out.println("Config Tic Tac Toe\n" +
+                "1. Medida del tablero\n" +
+                "2. Volver atrás\n" +
+                "Select a option:");
+        return (short) Integer.parseInt(sc.nextLine());
+    }
+
+    // Pediremos al usuario medida del tablero
+    // Por defecto: 3
+    // Minimo: 3 | Maximo: 10
+
+    public int seleccionarTamañoTablero()
+    {
+        int size;
+        System.out.println("Medida tablero Tic Tac Toe\n" +
+                "- Por defecto 3\n" +
+                "- Min 3\n" +
+                "- Max 10\n" +
+                "Select a option:");
+
+        try {
+            size = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) { return seleccionarTamañoTablero(); }
+
+        if (size < 3 || size > 10) return seleccionarTamañoTablero();
+        else return size;
+    }
+
+    public int seleccionarTamañoTablero(int defaultSize)
+    {
+        int size;
+        System.out.println("Medida tablero Tic Tac Toe\n" +
+                "- Por defecto " + defaultSize + "\n" +
+                "- Min 3\n" +
+                "- Max 10\n" +
+                "Select a option:");
+
+        try {
+            size = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) { return seleccionarTamañoTablero(defaultSize); }
+
+        if (size < 3 || size > 10) return seleccionarTamañoTablero(defaultSize);
+        else return size;
     }
 
     // Muestra el tablero al completo y indica el turno del jugador

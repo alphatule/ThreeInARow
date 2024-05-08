@@ -107,7 +107,7 @@ class JuegoTest {
         j.jugar((short) 0,(short) 1); // Jugador 1
         j.jugar((short) 1,(short) 1); // Jugador 2
         j.jugar((short) 2,(short) 0); // Jugador 1
-        
+
         // Ultima jugada de jugador 2
         Assertions.assertEquals(true, j.jugadaGanadora((short) 1,(short) 2));
         // miramos que sea jugador 2 (false)

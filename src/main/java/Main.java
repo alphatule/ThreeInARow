@@ -1,14 +1,18 @@
-import com.sun.org.apache.bcel.internal.generic.FALOAD;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
     static boolean enMenu = true;
     static Juego juego = new Juego();
+    static TUI tui = new TUI();
     public static void main(String[] args) {
-        TUI tui = new TUI();
+        mostarMenu();
+    }
 
+    private static void mostarMenu()
+    {
         while (enMenu)
         {
             try
@@ -23,7 +27,8 @@ public class Main {
                         cargarPartida();
                     case 3:
                         // Configuration
-                        configuracion();
+                        enMenu = configuracion();
+
                     case 4:
                         // Exit
                         salir();
@@ -49,9 +54,39 @@ public class Main {
         throw new NotImplementedException();
     }
 
-    private static void configuracion()
+    private static boolean configuracion()
     {
-        throw new NotImplementedException();
+        boolean enMenuConfig = true;
+        while (enMenuConfig)
+        {
+            try
+            {
+                switch (tui.mostrarMenuConfig())
+                {
+                    case 1:
+                        // New Game
+                        int size = tui.seleccionarTamañoTablero();
+                        System.out.println("\n\n\n\n\n\n\n\nTamaño Elegido " + size);
+                        File sC = new File("boardSize.txt");
+                        if (sC.exists()) sC.createNewFile();
+
+                        throw new NotImplementedException();
+                    case 2:
+                        // Exit
+                        mostarMenu();
+                        enMenuConfig = false;
+                    default:
+                        // Cualquier otro numero
+                        // seguira dando vueltas en el bucle
+                }
+            } catch (NumberFormatException e)
+            {
+                // Volvemos al menu de nuevo :)
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
     }
 
     private static void salir()
