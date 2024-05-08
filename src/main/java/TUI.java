@@ -30,7 +30,7 @@ public class TUI {
     // Por defecto: 3
     // Minimo: 3 | Maximo: 10
 
-    public int seleccionarTamañoTablero()
+    public int seleccionarTamanoTablero()
     {
         int size;
         System.out.println("Medida tablero Tic Tac Toe\n" +
@@ -41,13 +41,13 @@ public class TUI {
 
         try {
             size = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) { return seleccionarTamañoTablero(); }
+        } catch (NumberFormatException e) { return seleccionarTamanoTablero(); }
 
-        if (size < 3 || size > 10) return seleccionarTamañoTablero();
+        if (size < 3 || size > 10) return seleccionarTamanoTablero();
         else return size;
     }
 
-    public int seleccionarTamañoTablero(int defaultSize)
+    public int seleccionarTamanoTablero(int defaultSize)
     {
         int size;
         System.out.println("Medida tablero Tic Tac Toe\n" +
@@ -58,9 +58,9 @@ public class TUI {
 
         try {
             size = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) { return seleccionarTamañoTablero(defaultSize); }
+        } catch (NumberFormatException e) { return seleccionarTamanoTablero(defaultSize); }
 
-        if (size < 3 || size > 10) return seleccionarTamañoTablero(defaultSize);
+        if (size < 3 || size > 10) return seleccionarTamanoTablero(defaultSize);
         else return size;
     }
 

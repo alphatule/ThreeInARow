@@ -1,6 +1,4 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.io.File;
 import java.io.IOException;
 
 public class Main {
@@ -21,14 +19,14 @@ public class Main {
                 {
                     case 1:
                         // New Game
-                        nuevaPartida();
+                        juego.nuevaPartida();
                     case 2:
                         // Load Game
-                        cargarPartida();
+//                        cargarPartida();
+                        throw new NotImplementedException();
                     case 3:
                         // Configuration
                         enMenu = configuracion();
-
                     case 4:
                         // Exit
                         salir();
@@ -40,19 +38,21 @@ public class Main {
             } catch (NumberFormatException e)
             {
                 // Volvemos al menu de nuevo :)
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    private static void nuevaPartida()
-    {
-        juego.nuevaPartida();
-    }
+//    private static void nuevaPartida()
+//    {
+//        juego.nuevaPartida();
+//    }
 
-    private static void cargarPartida()
-    {
-        throw new NotImplementedException();
-    }
+//    private static void cargarPartida()
+//    {
+//        throw new NotImplementedException();
+//    }
 
     private static boolean configuracion()
     {
@@ -64,13 +64,8 @@ public class Main {
                 switch (tui.mostrarMenuConfig())
                 {
                     case 1:
-                        // New Game
-                        int size = tui.seleccionarTamañoTablero();
-                        System.out.println("\n\n\n\n\n\n\n\nTamaño Elegido " + size);
-                        File sC = new File("boardSize.txt");
-                        if (sC.exists()) sC.createNewFile();
-
-                        throw new NotImplementedException();
+                        // Le pedimos al tui la informacion de la configuracion y la aplicamos directamente al juego
+                        juego.applyNewConfig(tui.seleccionarTamanoTablero());
                     case 2:
                         // Exit
                         mostarMenu();
@@ -89,8 +84,5 @@ public class Main {
         return true;
     }
 
-    private static void salir()
-    {
-        enMenu = false;
-    }
+    private static void salir() { enMenu = false; }
 }

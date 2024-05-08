@@ -1,4 +1,8 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Juego {
     // Turno = True => Es turno del jugador / Jugador 1
@@ -6,6 +10,10 @@ public class Juego {
     private boolean turno;
     // El tablero deberia ser siempre un 3x3 pero podria variar para ampliar funcionalidad al juego.
     private short[][] tablero;
+    // Config del juego
+    private int tableroSize;
+
+    public int getTableroSize() { return tableroSize; }
 
     public boolean isTurno() {
         return turno;
@@ -16,16 +24,15 @@ public class Juego {
     }
 
     // Creamos un nuevo tablero en blanco
-    public void nuevaPartida()
-    {
+    public void nuevaPartida() throws IOException {
+        tableroSize = getConfigSize();
         short[][] tInit = {
                 {0,0,0},
                 {0,0,0},
                 {0,0,0}
         };
         tablero = tInit;
-        turno = true;
-
+        turno = true; // Colocamos el turno del jugador 1
     }
 
     // Indicamos la fila y columna donde el jugador (que tiene el turno) quiere colocar la ficha
@@ -62,14 +69,43 @@ public class Juego {
         tableroCopia[fila][columna] = (short) (this.turno ? 1 : 2);
 
         // Verificamos si hay una jugada ganadora en todas las direcciones
-        System.out.println(Boolean.toString(chequearFila(tableroCopia, fila)) +
-                Boolean.toString(chequearColumna(tableroCopia, columna)) +
-                        Boolean.toString(chequearDiagonalPrincipal(tableroCopia)) +
-                                Boolean.toString(chequearDiagonalSecundaria(tableroCopia)));
+//        System.out.println(Boolean.toString(chequearFila(tableroCopia, fila)) +
+//                Boolean.toString(chequearColumna(tableroCopia, columna)) +
+//                        Boolean.toString(chequearDiagonalPrincipal(tableroCopia)) +
+//                                Boolean.toString(chequearDiagonalSecundaria(tableroCopia)));
         return chequearFila(tableroCopia, fila) ||
         chequearColumna(tableroCopia, columna) ||
         chequearDiagonalPrincipal(tableroCopia) ||
         chequearDiagonalSecundaria(tableroCopia);
+    }
+
+    //Aplicamos nueva configuracion recibida del Main
+    public void applyNewConfig(int size) throws IOException {
+//        System.out.println("\n\n\n\n\n\n\n\nTamaño Elegido " + size);
+        if (size < 3 || size > 10) size = 3;
+        String fileName = "boardSize.txt";
+        File sC = new File(fileName);
+        if (!sC.exists()) sC.createNewFile();
+        if (sC.canRead())
+        {
+            FileWriter sConfig = new FileWriter(fileName);
+            sConfig.write(String.valueOf(size));
+            sConfig.close();
+            Scanner cReader = new Scanner(sC);
+            tableroSize = Integer.valueOf(cReader.nextLine());
+//            System.out.println("Esto es la info del documento: " + tableroSize);
+        }
+    }
+
+    // Devolvemos un entero en el que miramos que medida tiene el tablero para crearlo
+    private int getConfigSize() throws IOException {
+        String fileName = "boardSize.txt";
+        File sC = new File(fileName);
+        if (!sC.exists()) return 3;
+        else {
+            Scanner cReader = new Scanner(sC);
+            return Integer.valueOf(cReader.nextLine());
+        }
     }
 
     private boolean chequearFila(short[][] tPrueba, int fila) {
