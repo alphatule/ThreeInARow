@@ -26,11 +26,12 @@ public class Juego {
     // Creamos un nuevo tablero en blanco
     public void nuevaPartida() throws IOException {
         tableroSize = getConfigSize();
-        short[][] tInit = {
-                {0,0,0},
-                {0,0,0},
-                {0,0,0}
-        };
+        short[][] tInit = new short[tableroSize][tableroSize];
+        for (int i = 0; i < tableroSize; i++) {
+            for (int j = 0; j < tableroSize; j++) {
+                tInit[i][j] = 0;
+            }
+        }
         tablero = tInit;
         turno = true; // Colocamos el turno del jugador 1
     }
@@ -57,10 +58,10 @@ public class Juego {
     // Hay que tener en cuenta que el tablero y el turno no se alteran
     public boolean jugadaGanadora(short fila, short columna)
     {
-        short[][] tableroCopia = new short[3][3];
+        short[][] tableroCopia = new short[tableroSize][tableroSize];
 
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
+        for (int i = 0; i < tableroSize; i++) {
+            for (int j = 0; j < tableroSize; j++) {
                 tableroCopia[i][j] = tablero[i][j];
             }
         }
@@ -81,7 +82,6 @@ public class Juego {
 
     //Aplicamos nueva configuracion recibida del Main
     public void applyNewConfig(int size) throws IOException {
-//        System.out.println("\n\n\n\n\n\n\n\nTamaño Elegido " + size);
         if (size < 3 || size > 10) size = 3;
         String fileName = "boardSize.txt";
         File sC = new File(fileName);
@@ -93,7 +93,6 @@ public class Juego {
             sConfig.close();
             Scanner cReader = new Scanner(sC);
             tableroSize = Integer.valueOf(cReader.nextLine());
-//            System.out.println("Esto es la info del documento: " + tableroSize);
         }
     }
 
