@@ -2,8 +2,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.util.Scanner;
 
 class JuegoTest {
     @ParameterizedTest
@@ -136,17 +138,21 @@ class JuegoTest {
 
     // Comprobacion de config
     @ParameterizedTest
-    @CsvSource({"1", "2", "3", "4", "5", "6", "11"})
-    void juegadaGanadora(int size) throws IOException {
+    @CsvSource({"1", "2", "3", "4", "5", "6", "11", "-1"})
+    void aplicamosConfig(int size) throws IOException {
         Juego j = new Juego();
         j.nuevaPartida();
         j.applyNewConfig(size);
         if (size < 3 || size > 10) size = 3;
         Assertions.assertEquals(size, j.getTableroSize());
+
+        File sC = new File("boardSize.txt");
+        Assertions.assertEquals(true, sC.exists());
+        Assertions.assertEquals(true, sC.canRead());
+
+        Scanner cReader = new Scanner(sC);
+        Assertions.assertEquals(String.valueOf(size), cReader.nextLine());
     }
-
-
-
 
     // Refactorizacion
     private static short[][] getShorts(Juego j) {
