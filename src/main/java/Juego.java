@@ -38,18 +38,18 @@ public class Juego {
 
     // Indicamos la fila y columna donde el jugador (que tiene el turno) quiere colocar la ficha
     // por lo tanto deberiamos actualizar el tablero y el turno
-    public void jugar(short fila, short columna)
+    public boolean jugar(short fila, short columna)
     {
         if (tablero[fila][columna] != 0)
         {
             // Ya hay una ficha colocada
-//            return false;
+            return false;
         } else
         {
             // No hay ficha y la colocamos
             tablero[fila][columna] = (short) (turno ? 1 : 2);
             turno = !turno;
-//            return true;
+            return true;
         }
     }
 
@@ -70,15 +70,27 @@ public class Juego {
         tableroCopia[fila][columna] = (short) (this.turno ? 1 : 2);
 
         // Verificamos si hay una jugada ganadora en todas las direcciones
-//        System.out.println(Boolean.toString(chequearFila(tableroCopia, fila)) +
-//                Boolean.toString(chequearColumna(tableroCopia, columna)) +
-//                        Boolean.toString(chequearDiagonalPrincipal(tableroCopia)) +
-//                                Boolean.toString(chequearDiagonalSecundaria(tableroCopia)));
         return chequearFila(tableroCopia, fila) ||
         chequearColumna(tableroCopia, columna) ||
         chequearDiagonalPrincipal(tableroCopia) ||
         chequearDiagonalSecundaria(tableroCopia);
     }
+
+    public boolean esEmpate() {
+        // Verificar si todas las casillas están ocupadas y no hay un ganador
+        for (int i = 0; i < tableroSize; i++) {
+            for (int j = 0; j < tableroSize; j++) {
+                if (tablero[i][j] == 0) {
+                    // Todavía hay casillas vacías, el juego no es un empate
+                    return false;
+                }
+            }
+        }
+        // Si todas las casillas están ocupadas y no hay un ganador, es un empate
+        return true; // !jugadaGanadora((short) 0, (short) 0); // Verifica si hay un ganador en cualquier posición (no importa la posición)
+//        return !jugadaGanadora((short) 0, (short) 0); // Verifica si hay un ganador en cualquier posición (no importa la posición)
+    }
+
 
     //Aplicamos nueva configuracion recibida del Main
     public void applyNewConfig(int size) throws IOException {
