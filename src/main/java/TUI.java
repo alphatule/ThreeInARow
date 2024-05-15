@@ -136,11 +136,19 @@ public class TUI {
                 {
                     System.out.println("Fila (horizontal) de 1 a " + tamanoTablero + ": ");
                     fila = (short) Integer.parseInt(sc.nextLine());
+                    if (fila == (short) 0) break;
                 }
                 while (columna < 1 || columna > tamanoTablero)
                 {
                     System.out.println("Columna (vertical) de 1 a " + tamanoTablero + ": ");
                     columna = (short) Integer.parseInt(sc.nextLine());
+                    if (columna == (short) 0) break;
+                }
+                if (fila == (short) 0 && columna == (short) 0) return (short[]) new short[]{(short) -1, (short) -1};
+                else if (fila == (short) 0 || columna == (short) 0) {
+                    fila = -1;
+                    columna = -1;
+                    Integer.parseInt("-asd");
                 }
                 return (short[]) new short[]{(short) (fila-1), (short) (columna-1)};
             } catch (NumberFormatException e){ System.out.println("Jugada erronea, la posicion indicada no es correcta."); }

@@ -1,7 +1,11 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.io.BufferedWriter;
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Juego {
@@ -116,6 +120,46 @@ public class Juego {
         else {
             Scanner cReader = new Scanner(sC);
             return Integer.valueOf(cReader.nextLine());
+        }
+    }
+
+    // Guardar partida actual
+    public void guardarPartida()
+    {
+        File carpeta = new File("savedgames");
+        if (!carpeta.exists()) carpeta.mkdir();
+
+        Date fActual = new Date();
+        SimpleDateFormat fFormato = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String nFichero = "savedgames/" + fFormato.format(fActual) + ".txt";
+        File fichero = new File(nFichero);
+        try {
+            // Crear el archivo
+            if (fichero.createNewFile() || fichero.exists()) {
+                FileWriter fWriter = new FileWriter(nFichero);
+                BufferedWriter bWriter = new BufferedWriter(fWriter);
+
+                // Primera linea guardamos el turno
+                bWriter.write(String.valueOf( (turno ? 1 : 2)));
+                bWriter.newLine();
+
+                // Segunda linea guardamos de cuanto es el tablero
+                bWriter.write(String.valueOf(tableroSize));
+                bWriter.newLine();
+
+                // Guardamos las matrices por numeros separados
+                for (int i = 0; i < tableroSize; i++) {
+                    for (int j = 0; j < tableroSize; j++) {
+                        if (j == tableroSize-1) bWriter.write(String.valueOf(tablero[i][j]));
+                        else bWriter.write(String.valueOf(tablero[i][j] + " "));
+                    }
+                    bWriter.newLine();
+                }
+                bWriter.close();
+                fWriter.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al crear el archivo: " + e.getMessage());
         }
     }
 
