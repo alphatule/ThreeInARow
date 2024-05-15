@@ -71,7 +71,7 @@ public class Main {
                     // Es una jugada ganadora por lo que mostramos tablero y notificamos de que ha ganado
                     juego.jugar(jugada[0], jugada[1]);
                     tui.mostrarTablero(juego.getTablero(), juego.isTurno());
-                    tui.finDePartida(juego.isTurno() ? 1 : 2);
+                    tui.finDePartida(!juego.isTurno() ? 1 : 2);
                     enPartida = false;
                 } else if (juego.jugar(jugada[0], jugada[1]))
                 {
@@ -102,7 +102,6 @@ public class Main {
                 enMenuCargarPartida = false;
             } else {
                 // Cargar numero oSc
-
                 juego.cargarPartida(archivos[oSc]);
                 tui.mostrarTablero(juego.getTablero(), juego.isTurno());
                 boolean enPartida = true;
@@ -128,7 +127,7 @@ public class Main {
                             // Es una jugada ganadora por lo que mostramos tablero y notificamos de que ha ganado
                             juego.jugar(jugada[0], jugada[1]);
                             tui.mostrarTablero(juego.getTablero(), juego.isTurno());
-                            tui.finDePartida(juego.isTurno() ? 1 : 2);
+                            tui.finDePartida(!juego.isTurno() ? 1 : 2);
                             enPartida = false;
                         } else if (juego.jugar(jugada[0], jugada[1]))
                         {
