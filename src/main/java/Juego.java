@@ -1,9 +1,6 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -38,6 +35,24 @@ public class Juego {
         }
         tablero = tInit;
         turno = true; // Colocamos el turno del jugador 1
+    }
+
+    // Creamos un nuevo tablero en blanco
+    public void cargarPartida(File archivo) throws IOException {
+        // Tenemos hacer que leea el archivo y hacer que lo cargue en el tablero y ponga el turno en su sitio
+        Scanner sc = new Scanner(archivo);
+        // Aplicamos turno
+        turno = (sc.nextInt() == 1);
+        // Aplicamos el tamaño del tablero
+        applyNewConfig(sc.nextInt());
+        // Ponemos el tablero como lo tenemos guardado
+        short[][] tInit = new short[tableroSize][tableroSize];
+        for (int i = 0; i < tableroSize; i++) {
+            for (int j = 0; j < tableroSize; j++) {
+                tInit[i][j] = (short) sc.nextInt();
+            }
+        }
+        tablero = tInit;
     }
 
     // Indicamos la fila y columna donde el jugador (que tiene el turno) quiere colocar la ficha
@@ -161,6 +176,13 @@ public class Juego {
         } catch (IOException e) {
             System.out.println("Error al crear el archivo: " + e.getMessage());
         }
+    }
+
+    // Obtener archivos de guardado
+    public File[] partidasGuardadas()
+    {
+        File f = new File("savedgames");
+        return f.listFiles();
     }
 
     private boolean chequearFila(short[][] tPrueba, int fila) {

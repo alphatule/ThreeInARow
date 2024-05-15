@@ -1,4 +1,6 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.io.File;
 import java.util.Scanner;
 
 public class TUI {
@@ -26,10 +28,20 @@ public class TUI {
         return (short) Integer.parseInt(sc.nextLine());
     }
 
+    public short mostrarMenuPartidasGuardadas(File[] partidas)
+    {
+        System.out.println("Selecciona la partida que quieres cargar:");
+        for (int i = 0; i < partidas.length; i++) {
+            // nombre archivo
+            System.out.println(String.valueOf(i+1)+". "+partidas[i].getName());
+        }
+        System.out.println(String.valueOf(partidas.length+1)+". Salir");
+        return (short) (Integer.parseInt(sc.nextLine())-1);
+    }
+
     // Pediremos al usuario medida del tablero
     // Por defecto: 3
     // Minimo: 3 | Maximo: 10
-
     public int seleccionarTamanoTablero()
     {
         int size;
