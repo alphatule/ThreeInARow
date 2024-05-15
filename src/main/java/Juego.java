@@ -89,10 +89,13 @@ public class Juego {
         tableroCopia[fila][columna] = (short) (this.turno ? 1 : 2);
 
         // Verificamos si hay una jugada ganadora en todas las direcciones
-        return chequearFila(tableroCopia, fila) ||
-        chequearColumna(tableroCopia, columna) ||
-        chequearDiagonalPrincipal(tableroCopia) ||
-        chequearDiagonalSecundaria(tableroCopia);
+//        return chequearFila(tableroCopia, fila) ||
+//        chequearColumna(tableroCopia, columna) ||
+//        chequearDiagonalPrincipal(tableroCopia) ||
+//        chequearDiagonalSecundaria(tableroCopia);
+        return chequearFilas(tableroCopia) ||
+            chequearColumnas(tableroCopia) ||
+            chequearDiagonales(tableroCopia);
     }
 
     public boolean esEmpate() {
@@ -185,47 +188,106 @@ public class Juego {
         return f.listFiles();
     }
 
-    private boolean chequearFila(short[][] tPrueba, int fila) {
-        int ficha = tPrueba[fila][0];
-        if (ficha == 0) return false;
-        for (int j = 0; j < 3; j++) {
-            if (tPrueba[fila][j] != ficha) {
-                return false;
+    private boolean chequearFilas(short[][] tablero) {
+        for (int i = 0; i < tablero.length; i++) {
+            int ficha = tablero[i][0];
+            if (ficha == 0) continue; // Si la casilla está vacía, pasamos a la siguiente fila
+            boolean ganadorEnFila = true;
+            for (int j = 1; j < tablero[i].length; j++) {
+                if (tablero[i][j] != ficha) {
+                    ganadorEnFila = false;
+                    break;
+                }
             }
+            if (ganadorEnFila) return true;
         }
-        return true;
+        return false;
     }
 
-    private boolean chequearColumna(short[][] tPrueba, int columna) {
-        int ficha = tPrueba[0][columna];
-        if (ficha == 0) return false;
-        for (int i = 0; i < 3; i++) {
-            if (tPrueba[i][columna] != ficha) {
-                return false;
+    private boolean chequearColumnas(short[][] tablero) {
+        for (int j = 0; j < tablero[0].length; j++) {
+            int ficha = tablero[0][j];
+            if (ficha == 0) continue; // Si la casilla está vacía, pasamos a la siguiente columna
+            boolean ganadorEnColumna = true;
+            for (int i = 1; i < tablero.length; i++) {
+                if (tablero[i][j] != ficha) {
+                    ganadorEnColumna = false;
+                    break;
+                }
             }
+            if (ganadorEnColumna) return true;
         }
-        return true;
+        return false;
     }
 
-    private boolean chequearDiagonalPrincipal(short[][] tPrueba) {
-        int ficha = tPrueba[0][0];
-        if (ficha == 0) return false;
-        for (int i = 0; i < 3; i++) {
-            if (tPrueba[i][i] != ficha) {
-                return false;
+    private boolean chequearDiagonales(short[][] tablero) {
+        int fila = tablero.length;
+        int columna = tablero[0].length;
+
+        // Verificar diagonal principal
+        int fichaPrincipal = tablero[0][0];
+        boolean ganadorEnDiagonalPrincipal = fichaPrincipal != 0;
+        for (int i = 1; i < Math.min(fila, columna); i++) {
+            if (tablero[i][i] != fichaPrincipal) {
+                ganadorEnDiagonalPrincipal = false;
+                break;
             }
         }
-        return true;
+
+        // Verificar diagonal secundaria
+        int fichaSecundaria = tablero[0][columna - 1];
+        boolean ganadorEnDiagonalSecundaria = fichaSecundaria != 0;
+        for (int i = 1; i < Math.min(fila, columna); i++) {
+            if (tablero[i][columna - 1 - i] != fichaSecundaria) {
+                ganadorEnDiagonalSecundaria = false;
+                break;
+            }
+        }
+
+        return ganadorEnDiagonalPrincipal || ganadorEnDiagonalSecundaria;
     }
 
-    private boolean chequearDiagonalSecundaria(short[][] tPrueba) {
-        int ficha = tPrueba[0][2];
-        if (ficha == 0) return false;
-        for (int i = 0; i < 3; i++) {
-            if (tPrueba[i][2 - i] != ficha) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    private boolean chequearFila(short[][] tPrueba, int fila) {
+//        int ficha = tPrueba[fila][0];
+//        if (ficha == 0) return false;
+//        for (int j = 0; j < 3; j++) {
+//            if (tPrueba[fila][j] != ficha) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean chequearColumna(short[][] tPrueba, int columna) {
+//        int ficha = tPrueba[0][columna];
+//        if (ficha == 0) return false;
+//        for (int i = 0; i < 3; i++) {
+//            if (tPrueba[i][columna] != ficha) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean chequearDiagonalPrincipal(short[][] tPrueba) {
+//        int ficha = tPrueba[0][0];
+//        if (ficha == 0) return false;
+//        for (int i = 0; i < 3; i++) {
+//            if (tPrueba[i][i] != ficha) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean chequearDiagonalSecundaria(short[][] tPrueba) {
+//        int ficha = tPrueba[0][2];
+//        if (ficha == 0) return false;
+//        for (int i = 0; i < 3; i++) {
+//            if (tPrueba[i][2 - i] != ficha) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 }
